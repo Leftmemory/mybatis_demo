@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis_demo.User">
+
+	<resultMap type="mybatis_demo.User" id="UserMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="address" property="address"/>
+		
+		<!-- 
+		一对多映射关系:	collection
+		多对一映射关系:	association
+		-->
+	</resultMap>
+
+	<select id="selectUserById" parameterType="string" resultType="mybatis_demo.User">
+		select * from User where id = #{id}
+	</select>
+
+	<select id="selectAllUser" resultType="mybatis_demo.User">
+		select * from User
+	</select>
+
+	<select id="selectAllUserForMap" resultType="hashmap">
+		select * from User
+	</select>
+
+
+	<select id="selectUserCondition" parameterType="mybatis_demo.User"
+		resultMap="UserMap">
+		select * from User
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="address != null">
+				and address = #{address}
+			</if>
+		</where>
+	</select>
+
+
+	<insert id="insertUser" parameterType="mybatis_demo.User">
+		insert into
+		user(id,name,address) values (#{id},#{name},#{address})
+	</insert>
+
+	<insert id="insertUserForMap" parameterType="hashmap">
+		insert into
+		user(id,name,address) values (#{id},#{name},#{address})
+	</insert>
+
+
+	<update id="updateUserById" parameterType="mybatis_demo.User">
+		update user set name =
+		#{name} where id = #{id}
+	</update>
+
+	<update id="updateUserByIdForMap" parameterType="hashmap">
+		update user set
+		name = #{name} where id = #{id}
+	</update>
+
+	<delete id="deleteUserById" parameterType="mybatis_demo.User">
+		delete from user where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteUserByIdForMap" parameterType="hashmap">
+		delete from user
+		where id = #{id}
+	</delete>
+</mapper>
