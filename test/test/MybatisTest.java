@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import mybatis_demo.Person;
 import mybatis_demo.User;
 
 import org.junit.Before;
@@ -116,7 +117,20 @@ public class MybatisTest {
 		for(User user: users){
 			System.out.println(user);
 		}
-		
-		
+	}
+	
+	@Test
+	public void test6() throws IOException {
+
+		SqlSession session = sf.openSession();
+//		Person p =
+//		 session.selectOne("mybatis_demo.Person.selectPersonById","0001");
+//		 System.out.println(p.getPersonId());
+
+		List<Person> Persons = session
+				.selectList("mybatis_demo.Person.selectAllPerson");
+		for (Person p : Persons) {
+			System.out.println(p);
+		}
 	}
 }
